@@ -3,6 +3,7 @@ const express = require("express"),
   app = express();
 
 let items = ["Buy Food", "Cook Food", "Eat Food"];
+let workItems = [];
 
 app.set("view engine", "ejs");
 
@@ -19,18 +20,34 @@ app.get("/", function(req, res) {
 
   let day = today.toLocaleDateString("en-Us", options);
 
-  res.render("list", { kindOfDay: day, newItems: items });
+  res.render("list", { listTitle: day, newItems: items });
 });
 
 app.post("/", function(req, res) {
   let item = req.body.newItem;
 
   if (item.length > 0) {
-    items.push(item);
+    if (req.body.list === "Work") {
+      workItems.push(item);
+      res.redirect("/work");
+    } else {
+      items.push(item);
+      res.redirect("/");
+    }
   }
-
-  res.redirect("/");
 });
+
+app.get("/work", function(req, res) {
+  res.render("list", { listTitle: "Work List", newItems: workItems });
+});
+
+// app.post("/work", function(req, res) {
+//   let item = req.body.newItem;
+//   if (item.length > 0) {
+//     workItems.push(item);
+//   }
+//   res.redirect("/work");
+// });
 
 app.listen(3000, () => {
   console.log("Server started on port 3000");

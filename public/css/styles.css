@@ -52,7 +52,7 @@ input[type="checkbox"] {
   margin: 20px;
 }
 
-p {
+label {
   margin: 0;
   padding: 20px;
   font-size: 20px;
