@@ -1,5 +1,5 @@
-function getDate() {
-  let today = new Date(),
+exports.getDate = () => {
+  const today = new Date(),
     options = {
       weekday: "long",
       day: "numeric",
@@ -7,6 +7,4 @@ function getDate() {
     };
 
   return today.toLocaleDateString("en-Us", options);
-}
-
-module.exports = getDate;
+};
