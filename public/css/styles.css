@@ -52,7 +52,7 @@ input[type="checkbox"] {
   margin: 20px;
 }
 
-label {
+p {
   margin: 0;
   padding: 20px;
   font-size: 20px;
@@ -65,7 +65,7 @@ form {
   margin-left: 20px;
 }
 
-button {
+.button {
   min-height: 50px;
   width: 50px;
   border-radius: 50%;

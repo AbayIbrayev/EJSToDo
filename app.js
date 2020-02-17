@@ -1,29 +1,30 @@
 const express = require("express"),
   bodyParser = require("body-parser"),
+  date = require(__dirname + "/date.js"),
   app = express();
 
 let items = ["Buy Food", "Cook Food", "Eat Food"];
 let workItems = [];
 
+
 app.set("view engine", "ejs");
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(express.static("public"));
 
-app.get("/", function(req, res) {
-  let today = new Date(),
-    options = {
-      weekday: "long",
-      day: "numeric",
-      month: "long"
-    };
+app.get("/", function (req, res) {
 
-  let day = today.toLocaleDateString("en-Us", options);
+  let day = date();
 
-  res.render("list", { listTitle: day, newItems: items });
+  res.render("list", {
+    listTitle: day,
+    newItems: items
+  });
 });
 
-app.post("/", function(req, res) {
+app.post("/", function (req, res) {
   let item = req.body.newItem;
 
   if (item.length > 0) {
@@ -37,17 +38,12 @@ app.post("/", function(req, res) {
   }
 });
 
-app.get("/work", function(req, res) {
-  res.render("list", { listTitle: "Work List", newItems: workItems });
+app.get("/work", function (req, res) {
+  res.render("list", {
+    listTitle: "Work List",
+    newItems: workItems
+  });
 });
-
-// app.post("/work", function(req, res) {
-//   let item = req.body.newItem;
-//   if (item.length > 0) {
-//     workItems.push(item);
-//   }
-//   res.redirect("/work");
-// });
 
 app.listen(3000, () => {
   console.log("Server started on port 3000");
