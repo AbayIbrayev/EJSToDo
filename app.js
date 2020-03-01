@@ -71,19 +71,40 @@ app.get("/", function(req, res) {
   });
 });
 
-// app.post("/", function(req, res) {
-//   let item = req.body.newItem;
+app.post("/", function(req, res) {
+  let itemName = req.body.newItem;
 
-//   if (item.length > 0) {
-//     if (req.body.list === "Work") {
-//       workItems.push(item);
-//       res.redirect("/work");
-//     } else {
-//       items.push(item);
-//       res.redirect("/");
-//     }
-//   }
-// });
+  const item = new Item({
+    name: itemName
+  });
+
+  item.save();
+
+  res.redirect("/");
+
+  // if (item.length > 0) {
+  //   if (req.body.list === "Work") {
+  //     workItems.push(item);
+  //     res.redirect("/work");
+  //   } else {
+  //     items.push(item);
+  //     res.redirect("/");
+  //   }
+  // }
+});
+
+app.post("/delete", (req, res) => {
+  const checkedItemId = req.body.checkbox;
+
+  Item.findByIdAndRemove(checkedItemId, err => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Successfully deleted");
+      res.redirect("/");
+    }
+  });
+});
 
 // app.get("/work", function(req, res) {
 //   res.render("list", {
