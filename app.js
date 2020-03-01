@@ -19,10 +19,13 @@ app.use(express.static("public"));
 
 //connecting to the DB
 
-mongoose.connect("mongodb://localhost:27017/todolistDB", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+mongoose.connect(
+  `mongodb+srv://admin-abay:${process.env.PASSWORD}@ejsto-do-fbd4l.mongodb.net/todolistDB`,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }
+);
 
 const itemSchema = new mongoose.Schema({
   name: String
@@ -172,6 +175,11 @@ app.get("/:customList", function(req, res) {
   // });
 });
 
-app.listen(3000, () => {
-  console.log("Server started on port 3000");
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 8000;
+}
+
+app.listen(port, () => {
+  console.log("Server started");
 });
